@@ -1,17 +1,36 @@
-import { galleryItems } from './gallery-items';
-import SimpleLightbox from "simplelightbox";
+import SimpleLightbox from 'simplelightbox';
+
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const galleryList = document.querySelector('.gallery');
+import { galleryItems } from './gallery-items.js';
 
-function renderGallery (gallery) {
-    return gallery.map(({ preview, original, description }) => 
-        `<a class="gallery__item" href="${original}">
-                <img class="gallery__image" src="${preview}" alt="${description}" />
-            </a>`
-    ).join('');
+const galleryEl = document.querySelector(".gallery")
+
+galleryEl.style.listStyle = "none";
+
+function addGalleryMarkup(gallery) {
+    return gallery.map(({ original, preview, description }) =>
+        `
+        <li>
+            <a class="gallery__item" href="${original}">
+            <img class="gallery__image" 
+            src="${preview}" 
+            alt="${description}"/>
+            </a>
+        </li>
+        `
+    ).join('')
 }
 
-galleryList.innerHTML = renderGallery(galleryItems);
+galleryEl.innerHTML = addGalleryMarkup(galleryItems)
 
-const lightbox = new SimpleLightbox('.gallery a', { animationSpeed: 250, loop: true, enableKeyboard: true, preloading: true, docClose: true, captionsData: 'alt'});
+const instance = new SimpleLightbox('.gallery a', {
+
+    animationSpeed: 250,
+    loop: true,
+    enableKeyboard: true,
+    preloading: true,
+    docClose: true,
+    captionsData: 'alt',
+}
+);
